@@ -1,4 +1,4 @@
-base repo setup borrowed from [https://github.com/begmaroman/go-micro-boilerplate][begmaroman/go-micro-boilerplate]
+base repo setup borrowed from [https://github.com/begmaroman/go-micro-boilerplate](begmaroman/go-micro-boilerplate)
 
 # Gametime Hero backend
 
