@@ -1,30 +1,8 @@
-[go]: https://golang.org/doc/install
-[gomicro]: https://github.com/micro/go-micro
-[nats]: https://nats.io/
-[docker]: https://www.docker.com/
-[dockercompose]: https://docs.docker.com/compose/
-[gomodules]: https://blog.golang.org/using-go-modules
-[protoc]: https://github.com/google/protobuf/releases
-[swagger]: https://swagger.io/
+base repo setup borrowed from [https://github.com/begmaroman/go-micro-boilerplate][begmaroman/go-micro-boilerplate]
 
-*NOTE 1: If something is not fully clear, feel free to create an issue. 
-Let's create an excellent boilerplate together!*
+# Gametime Hero backend
 
-*NOTE 2: There are no tests in the project, this is a different story :)*
-
-# Go Micro Boilerplate
-
-Go Micro Boilerplate is the example of the [GoLang][go] project based on the microservices architecture.
-
-This project provides simple functionality to perform CRUD operations related to the user entity.
-
-There are two microservices, one web service that exposes REST API, 
-and the second one is the RPC microservice that implements functionality to work with users, 
-basically this service is responsible for the business logic. 
-
-Once a user sends an HTTP request to the web service, it handles the incoming request, prepares data
-and calls the RPC service through RPC request using protobuf models.
-The RPC service handles this request, applies some business logic, and updates/reads the data store.
+Gametime Hero is a project to provide event management tools.
 
 ### Technologies
 
