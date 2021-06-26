@@ -1,0 +1,91 @@
+syntax = "proto3";
+
+option go_package = "github.com/marboga/gametimehero/proto/event-svc;eventproto";
+
+package eventproto;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+import "github.com/marboga/gametimehero/proto/health/health.proto";
+import "github.com/marboga/gametimehero/proto/status/status.proto";
+
+service AccountService {
+    rpc Health(google.protobuf.Empty) returns (health.HealthResponse) {}
+    rpc Ping(google.protobuf.Empty) returns (google.protobuf.Empty) {}
+
+    // Event CRUD operations
+    rpc CreateEvent(CreateEventRequest) returns (CreateEventResponse) {}
+    rpc ReadEvent(ReadEventRequest) returns (ReadEventResponse) {}
+    rpc ListEvents(ListEventsRequest) returns (ListEventsResponse) {}
+    rpc UpdateEvent(UpdateEventRequest) returns (UpdateEventResponse) {}
+    rpc DeleteEvent(DeleteEventRequest) returns (DeleteEventResponse) {}
+}
+
+// CreateEvent operation
+message CreateEventRequest {
+    Event event = 1;
+}
+
+message CreateEventResponse {
+    oneof result {
+        Status error = 1;
+        Event event = 2;
+    }
+}
+
+// ReadEvent operation
+message ReadEventRequest {
+    string event_id = 1;
+}
+
+message ReadEventResponse {
+    oneof result {
+        Status error = 1;
+        Event event = 2;
+    }
+}
+
+// ListEvents operation
+message ListEventsRequest {}
+
+message ListEventsResponseOK {
+    repeated Event events = 1;
+}
+
+message ListEventsResponse {
+    oneof result {
+        Status error = 1;
+        ListEventsResponseOK data = 2;
+    }
+}
+
+// UpdateEventAttributes operation
+message UpdateEventRequest {
+    string event_id = 1;
+    Event event = 2;
+}
+
+message UpdateEventResponse {
+    oneof result {
+        Status error = 1;
+        Event event = 2;
+    }
+}
+
+// DeleteEvent operation
+message DeleteEventRequest {
+    string event_id = 1;
+}
+
+message DeleteEventResponse {
+    oneof result {
+        Status error = 1;
+        google.protobuf.Empty empty = 2;
+    }
+}
+message Event {
+    string id = 1;
+    string name = 2;
+    google.protobuf.Timestamp updated_at = 3;
+    google.protobuf.Timestamp created_at = 4;
+}

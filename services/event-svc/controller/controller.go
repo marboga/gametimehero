@@ -5,30 +5,30 @@ package controller
 import (
 	"context"
 
-	accountproto "github.com/marboga/gametimehero/proto/account-svc"
+	eventproto "github.com/marboga/gametimehero/proto/event-svc"
 )
 
 // Controller represents the behavior of the business/controller logic of the service.
 // Currently, proto models are used in the controller layer.
 // This is not really the right way because proto models are more about the transport layer, not the controller one.
-// So if you would like to implement controller representation of proto models, you can do so.
+// So if you would like to implement domain/controller representation of proto models, you can do so.
 // Don't forget to implement a conversion logic between proto models and controller ones :)
 type Controller interface {
 	// HealthCheck returns an error if there is a problem with the service.
 	HealthCheck() error
 
-	// CreateUser creates a new user by the given input.
-	CreateUser(context.Context, *accountproto.User) (*accountproto.User, error)
+	// CreateEvent creates a new Event by the given input.
+	CreateEvent(context.Context, *eventproto.Event) (*eventproto.Event, error)
 
-	// ReadUser reads an existing user by its ID.
-	ReadUser(context.Context, string) (*accountproto.User, error)
+	// ReadEvent reads an existing Event by its ID.
+	ReadEvent(context.Context, string) (*eventproto.Event, error)
 
-	// ListUsers lists all users.
-	ListUsers(context.Context) ([]*accountproto.User, error)
+	// ListEvents lists all events.
+	ListEvents(context.Context) ([]*eventproto.Event, error)
 
-	// UpdateUser updates an existing user by its ID using the given input.
-	UpdateUser(context.Context, string, *accountproto.User) (*accountproto.User, error)
+	// UpdateEvent updates an existing Event by its ID using the given input.
+	UpdateEvent(context.Context, string, *eventproto.Event) (*eventproto.Event, error)
 
-	// DeleteUser deletes an existing user by its ID.
-	DeleteUser(context.Context, string) error
+	// DeleteEvent deletes an existing Event by its ID.
+	DeleteEvent(context.Context, string) error
 }
