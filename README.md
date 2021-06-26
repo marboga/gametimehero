@@ -222,20 +222,4 @@ We use [Swagger][swagger] to describe REST API of the project.
 - `cmd` contains the main package.
 - `account` contains handlers of endpoints that are related to the account logic.
 
-## Inspired by
-
-- [GoLang][go]
-- [Go Micro][gomicro]
-- [NATS][nats]
-- [Docker][docker]
-- [docker-compose][dockercompose]
-- [Swagger][swagger]
-
 ## TODO
-
-- Add a cli tool to generate a simple microservice. It will be in a new repo.
-- Add protected endpoints. 
-- Add example of usage of postgres, and redis.
-
-
-Donate ETH: 0xc81A7a2b1bbC8D0CD09bf7eBdB8ac5A635711B5f
