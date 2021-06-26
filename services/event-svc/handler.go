@@ -1,6 +1,6 @@
 // This is the transport layer of the service. Here we use RPC communication type.
 // You can implement any transport you want, e.g. HTTP, WS, etc.
-package accountsvc
+package eventsvc
 
 import (
 	"context"
@@ -9,15 +9,15 @@ import (
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 
-	accountproto "github.com/marboga/gametimehero/proto/account-svc"
+	eventproto "github.com/marboga/gametimehero/proto/event-svc"
 	"github.com/marboga/gametimehero/proto/health"
 	proto "github.com/marboga/gametimehero/proto/status"
-	"github.com/marboga/gametimehero/services/account-svc/controller"
+	"github.com/marboga/gametimehero/services/event-svc/controller"
 	"github.com/marboga/gametimehero/utils/rpc"
 )
 
-// To make sure Handler implements accountproto.AccountService interface.
-var _ accountproto.AccountServiceHandler = &Handler{}
+// To make sure Handler implements eventproto.EventService interface.
+var _ eventproto.EventServiceHandler = &Handler{}
 
 // Options serves as the dependency injection container to create a new handler.
 type Options struct {
@@ -33,7 +33,7 @@ type Handler struct {
 	log            *logrus.Logger
 }
 
-// NewHandler returns a new handler for the account-svc.
+// NewHandler returns a new handler for the event-svc.
 func NewHandler(opts *Options) *Handler {
 	return &Handler{
 		service:        opts.Service,
@@ -42,133 +42,133 @@ func NewHandler(opts *Options) *Handler {
 	}
 }
 
-// CreateUser implements accountproto.AccountServiceHandler interface.
-// Calls the service's method to create a new user by the given input.
-func (h *Handler) CreateUser(ctx context.Context, req *accountproto.CreateUserRequest, resp *accountproto.CreateUserResponse) error {
-	// Create user.
-	createdUser, err := h.service.CreateUser(ctx, req.GetUser())
+// CreateEvent implements eventproto.EventServiceHandler interface.
+// Calls the service's method to create a new event by the given input.
+func (h *Handler) CreateEvent(ctx context.Context, req *eventproto.CreateEventRequest, resp *eventproto.CreateEventResponse) error {
+	// Create event.
+	createdEvent, err := h.service.CreateEvent(ctx, req.GetEvent())
 	if err != nil {
 		// Try to convert the given error to the proto status.
 		if resStatus, ok := h.errorAsStatus(ctx, err); ok {
-			resp.Result = &accountproto.CreateUserResponse_Error{
+			resp.Result = &eventproto.CreateEventResponse_Error{
 				Error: resStatus,
 			}
 			return nil
 		}
 
 		// Otherwise just return this error wrapped to a description.
-		return errors.Wrap(err, "unable to create user")
+		return errors.Wrap(err, "unable to create event")
 	}
 
 	// Prepare RPC response data.
-	resp.Result = &accountproto.CreateUserResponse_User{
-		User: createdUser,
+	resp.Result = &eventproto.CreateEventResponse_Event{
+		Event: createdEvent,
 	}
 	return nil
 }
 
-// ReadUser implements accountproto.AccountServiceHandler interface.
-// Calls the service's method to read an existing user by the given ID.
-func (h *Handler) ReadUser(ctx context.Context, req *accountproto.ReadUserRequest, resp *accountproto.ReadUserResponse) error {
-	// Read user.
-	user, err := h.service.ReadUser(ctx, req.GetUserId())
+// ReadEvent implements eventproto.EventServiceHandler interface.
+// Calls the service's method to read an existing event by the given ID.
+func (h *Handler) ReadEvent(ctx context.Context, req *eventproto.ReadEventRequest, resp *eventproto.ReadEventResponse) error {
+	// Read event.
+	event, err := h.service.ReadEvent(ctx, req.GetEventId())
 	if err != nil {
 		// Try to convert the given error to the proto status.
 		if resStatus, ok := h.errorAsStatus(ctx, err); ok {
-			resp.Result = &accountproto.ReadUserResponse_Error{
+			resp.Result = &eventproto.ReadEventResponse_Error{
 				Error: resStatus,
 			}
 			return nil
 		}
 
 		// Otherwise just return this error wrapped to a description.
-		return errors.Wrapf(err, "unable to read user with ID '%s'", req.GetUserId())
+		return errors.Wrapf(err, "unable to read event with ID '%s'", req.GetEventId())
 	}
 
 	// Prepare RPC response data.
-	resp.Result = &accountproto.ReadUserResponse_User{
-		User: user,
+	resp.Result = &eventproto.ReadEventResponse_Event{
+		Event: event,
 	}
 	return nil
 }
 
-// ListUsers implements accountproto.AccountServiceHandler interface.
-// Calls the service's method to list all users.
-func (h *Handler) ListUsers(ctx context.Context, req *accountproto.ListUsersRequest, resp *accountproto.ListUsersResponse) error {
-	// List all users.
-	users, err := h.service.ListUsers(ctx)
+// ListEvents implements eventproto.EventServiceHandler interface.
+// Calls the service's method to list all events.
+func (h *Handler) ListEvents(ctx context.Context, req *eventproto.ListEventsRequest, resp *eventproto.ListEventsResponse) error {
+	// List all events.
+	events, err := h.service.ListEvents(ctx)
 	if err != nil {
 		// Try to convert the given error to the proto status.
 		if resStatus, ok := h.errorAsStatus(ctx, err); ok {
-			resp.Result = &accountproto.ListUsersResponse_Error{
+			resp.Result = &eventproto.ListEventsResponse_Error{
 				Error: resStatus,
 			}
 			return nil
 		}
 
 		// Otherwise just return this error wrapped to a description.
-		return errors.Wrapf(err, "unable to list users")
+		return errors.Wrapf(err, "unable to list events")
 	}
 
 	// Prepare RPC response data.
-	resp.Result = &accountproto.ListUsersResponse_Data{
-		Data: &accountproto.ListUsersResponseOK{
-			Users: users,
+	resp.Result = &eventproto.ListEventsResponse_Data{
+		Data: &eventproto.ListEventsResponseOK{
+			Events: events,
 		},
 	}
 	return nil
 }
 
-// UpdateUser implements accountproto.AccountServiceHandler interface.
-// Calls the service's method to update an existing user by the given ID and input.
-func (h *Handler) UpdateUser(ctx context.Context, req *accountproto.UpdateUserRequest, resp *accountproto.UpdateUserResponse) error {
-	// Update user by its ID.
-	user, err := h.service.UpdateUser(ctx, req.GetUserId(), req.GetUser())
+// UpdateEvent implements eventproto.EventServiceHandler interface.
+// Calls the service's method to update an existing event by the given ID and input.
+func (h *Handler) UpdateEvent(ctx context.Context, req *eventproto.UpdateEventRequest, resp *eventproto.UpdateEventResponse) error {
+	// Update event by its ID.
+	event, err := h.service.UpdateEvent(ctx, req.GetEventId(), req.GetEvent())
 	if err != nil {
 		// Try to convert the given error to the proto status.
 		if resStatus, ok := h.errorAsStatus(ctx, err); ok {
-			resp.Result = &accountproto.UpdateUserResponse_Error{
+			resp.Result = &eventproto.UpdateEventResponse_Error{
 				Error: resStatus,
 			}
 			return nil
 		}
 
 		// Otherwise just return this error wrapped to a description.
-		return errors.Wrapf(err, "unable to update user with ID '%s'", req.GetUserId())
+		return errors.Wrapf(err, "unable to update event with ID '%s'", req.GetEventId())
 	}
 
 	// Prepare RPC response data.
-	resp.Result = &accountproto.UpdateUserResponse_User{
-		User: user,
+	resp.Result = &eventproto.UpdateEventResponse_Event{
+		Event: event,
 	}
 	return nil
 }
 
-// DeleteUser implements accountproto.AccountServiceHandler interface.
-// Calls the service's method to delete an existing user by the given ID.
-func (h *Handler) DeleteUser(ctx context.Context, req *accountproto.DeleteUserRequest, resp *accountproto.DeleteUserResponse) error {
-	// Delete user by its ID.
-	if err := h.service.DeleteUser(ctx, req.GetUserId()); err != nil {
+// DeleteEvent implements eventproto.EventServiceHandler interface.
+// Calls the service's method to delete an existing event by the given ID.
+func (h *Handler) DeleteEvent(ctx context.Context, req *eventproto.DeleteEventRequest, resp *eventproto.DeleteEventResponse) error {
+	// Delete event by its ID.
+	if err := h.service.DeleteEvent(ctx, req.GetEventId()); err != nil {
 		// Try to convert the given error to the proto status.
 		if resStatus, ok := h.errorAsStatus(ctx, err); ok {
-			resp.Result = &accountproto.DeleteUserResponse_Error{
+			resp.Result = &eventproto.DeleteEventResponse_Error{
 				Error: resStatus,
 			}
 			return nil
 		}
 
 		// Otherwise just return this error wrapped to a description.
-		return errors.Wrapf(err, "unable to delete user with ID '%s'", req.GetUserId())
+		return errors.Wrapf(err, "unable to delete event with ID '%s'", req.GetEventId())
 	}
 
 	// Prepare RPC response data.
-	resp.Result = &accountproto.DeleteUserResponse_Empty{
+	resp.Result = &eventproto.DeleteEventResponse_Empty{
 		Empty: &empty.Empty{},
 	}
 	return nil
 }
 
-// Health implements accountproto.AccountServiceHandler interface
+// Health implements eventproto.EventServiceHandler interface
 func (h *Handler) Health(ctx context.Context, _ *empty.Empty, res *health.HealthResponse) error {
 	// Check database
 	if err := h.service.HealthCheck(); err != nil {
@@ -186,7 +186,7 @@ func (h *Handler) Health(ctx context.Context, _ *empty.Empty, res *health.Health
 	return nil
 }
 
-// Ping implements accountproto.AccountServiceHandler and helath.Pinger interface.
+// Ping implements eventproto.EventServiceHandler and helath.Pinger interface.
 // This is needed to implement self-pinger functionality.
 func (h *Handler) Ping(ctx context.Context, _ *empty.Empty, _ *empty.Empty) error {
 	return nil

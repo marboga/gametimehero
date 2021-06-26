@@ -8,6 +8,7 @@ import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
 import "github.com/marboga/gametimehero/proto/health/health.proto";
 import "github.com/marboga/gametimehero/proto/status/status.proto";
+import "github.com/marboga/gametimehero/proto/common/types.proto";
 
 service AccountService {
     rpc Health(google.protobuf.Empty) returns (health.HealthResponse) {}
@@ -92,12 +93,12 @@ message Event {
     string event_type = 1;
     LatLong lat_long = 2;
     google.protobuf.Timestamp start_time = 3;
-    int duration = 4;
+    types.Int64 duration = 4;
     User creator = 5;
     repeated User attendees = 6;
     string icon_url = 7;
     string description = 8;
-    int attendee_count = 9;
+    types.Int64 attendee_count = 9;
     string equipment_needed = 10;
 };
 

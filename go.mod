@@ -13,7 +13,9 @@ require (
 	github.com/go-openapi/swag v0.19.12
 	github.com/go-openapi/validate v0.19.14
 	github.com/gogo/protobuf v1.3.0 // indirect
-	github.com/golang/protobuf v1.4.0
+	github.com/golang/glog v0.0.0-20210429001901-424d2337a529 // indirect
+	github.com/golang/protobuf v1.5.2
+	github.com/grpc-ecosystem/grpc-gateway v1.16.0 // indirect
 	github.com/jessevdk/go-flags v1.4.0
 	github.com/micro/cli/v2 v2.1.2
 	github.com/micro/go-micro/v2 v2.9.1
@@ -25,8 +27,9 @@ require (
 	github.com/prometheus/client_golang v1.2.1 // indirect
 	github.com/sirupsen/logrus v1.5.0
 	github.com/stretchr/testify v1.6.1
-	golang.org/x/net v0.0.0-20201110031124-69a78807bb2b
-	golang.org/x/tools v0.0.0-20191218040434-6f9e13bbec44 // indirect
-	google.golang.org/genproto v0.0.0-20191216164720-4f79533eabd1
-	google.golang.org/protobuf v1.22.0
+	golang.org/x/net v0.0.0-20210405180319-a5a99cb37ef4
+	google.golang.org/genproto v0.0.0-20210624195500-8bfb893ecb84
+	google.golang.org/grpc v1.38.0 // indirect
+	google.golang.org/protobuf v1.27.0
+	gopkg.in/yaml.v2 v2.4.0 // indirect
 )

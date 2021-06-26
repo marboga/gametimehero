@@ -1,9 +1,9 @@
 swagger: '2.0'
 
 info:
-  description: Some description about the platform
+  description: a very fine description
+  title: Gametime Hero backend api
   version: 0.0.1
-  title: Some title about platform
 
 basePath: /
 
@@ -101,7 +101,107 @@ paths:
           schema:
             $ref: '#/definitions/User'
 
+  /event:
+    post:
+      summary: 'Creates a new event.'
+      operationId: eventCreate
+      parameters:
+      - name: seed
+        in: body
+        description: 'The event input.'
+        required: true
+        schema:
+          $ref: '#/definitions/Event'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Event'
+    get:
+      summary: 'Returns all events.'
+      operationId: eventsList
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/EventsList'
+
+  /event/{event_id}:
+    get:
+      summary: 'Returns an existing event by its ID.'
+      operationId: eventRead
+      parameters:
+      - name: event_id
+        in: path
+        description: 'The ID of the event to be read.'
+        required: true
+        type: string
+        format: uuid
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Event'
+    delete:
+      summary: 'Delete an existing event by its ID.'
+      operationId: eventDelete
+      parameters:
+      - name: event_id
+        in: path
+        description: 'The ID of the event to be deleted'
+        required: true
+        type: string
+        format: uuid
+      responses:
+        '204':
+          description: OK
+    put:
+      summary: 'Update an existing event by its ID.'
+      operationId: eventUpdate
+      parameters:
+      - name: event_id
+        in: path
+        description: 'The ID of the event to be updated.'
+        required: true
+        type: string
+        format: uuid
+      - name: seed
+        in: body
+        description: 'The updated event input.'
+        required: true
+        schema:
+          $ref: '#/definitions/Event'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Event'
+            
 definitions:
+  EventsList:
+    description: 'The list of events.'
+    type: array
+    items:
+      $ref: '#/definitions/Event'
+
+  Event:
+    description: 'Event data.'
+    type: object
+    properties:
+      id:
+        description: 'Event identifier.'
+        type: string
+      name:
+        description: 'The name of the event.'
+        type: string
+      updated_at:
+        description: 'The date and time that the event was last updated.'
+        type: string
+        format: date-time
+      created_at:
+        description: 'The date and time that the event was created.'
+        type: string
+        format: date-time
 
   UsersList:
     description: 'The list of users.'
