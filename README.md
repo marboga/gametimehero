@@ -178,7 +178,7 @@ There are 3 layers:
     This layer prepares and passes data to pass to the service layer.
     No business logic inside of this layer.
 
-- **Domain/business layer** represents the business/domain logic of the service. 
+- **Controller/business layer** represents the business/controller logic of the service. 
     This layer doesn't care about transport and must not depend on it.
     All business logic must be implemented in this layer.
 
@@ -196,7 +196,7 @@ Each of these layers has its own interface that describes the behavior of it.
     This script can load some external data like secrets, passwords, etc.
 - `handler.go` implements proto service interface defined in the proto model of a service.
     This is the transport layer of the service.
-- `domain` contains the business logic.
+- `controller` contains the business logic.
 - `store` is the store layer.
 - `microservice` implements functionality to setup and configure your microservice. 
     No business logic inside.

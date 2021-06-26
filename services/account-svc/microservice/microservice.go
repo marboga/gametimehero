@@ -8,7 +8,7 @@ import (
 	accountproto "github.com/marboga/gametimehero/proto/account-svc"
 	"github.com/marboga/gametimehero/proto/health"
 	accountsvc "github.com/marboga/gametimehero/services/account-svc"
-	"github.com/marboga/gametimehero/services/account-svc/domain"
+	"github.com/marboga/gametimehero/services/account-svc/controller"
 	"github.com/marboga/gametimehero/services/account-svc/store/memory"
 	"github.com/marboga/gametimehero/utils/healthchecker"
 	"github.com/marboga/gametimehero/utils/rpc"
@@ -51,7 +51,7 @@ func New(svc micro.Service, clientOpts *ClientOptions) (*MicroService, error) {
 	})
 
 	// Create business layer.
-	service := domain.New(&domain.Options{
+	service := controller.New(&controller.Options{
 		Store: store,
 		Log:   clientOpts.Log,
 	})

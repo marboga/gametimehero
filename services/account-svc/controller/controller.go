@@ -1,6 +1,6 @@
 // This package contains business logic of the service.
 // No store or transport logic inside.
-package domain
+package controller
 
 import (
 	"context"
@@ -8,12 +8,12 @@ import (
 	accountproto "github.com/marboga/gametimehero/proto/account-svc"
 )
 
-// Domain represents the behavior of the business/domain logic of the service.
-// Currently, proto models are used in the domain layer.
-// This is not really the right way because proto models are more about the transport layer, not the domain one.
-// So if you would like to implement domain representation of proto models, you can do so.
-// Don't forget to implement a conversion logic between proto models and domain ones :)
-type Domain interface {
+// Controller represents the behavior of the business/controller logic of the service.
+// Currently, proto models are used in the controller layer.
+// This is not really the right way because proto models are more about the transport layer, not the controller one.
+// So if you would like to implement controller representation of proto models, you can do so.
+// Don't forget to implement a conversion logic between proto models and controller ones :)
+type Controller interface {
 	// HealthCheck returns an error if there is a problem with the service.
 	HealthCheck() error
 

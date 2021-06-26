@@ -10,7 +10,7 @@ import (
 
 // Store represents the behavior of the store layer.
 // Currently, proto models are used in the store layer as well.
-// The same comment as for domain.Domain interface.
+// The same comment as for controller.Controller interface.
 type Store interface {
 	// CreateUser creates a new user by the given input in the store.
 	// This function only creates a new record using the given input. No business logic there.

@@ -12,7 +12,7 @@ import (
 	accountproto "github.com/marbogast/gametimehero/proto/account-svc"
 	"github.com/marbogast/gametimehero/proto/health"
 	proto "github.com/marbogast/gametimehero/proto/status"
-	"github.com/marbogast/gametimehero/services/account-svc/domain"
+	"github.com/marbogast/gametimehero/services/account-svc/controller"
 	"github.com/marbogast/gametimehero/utils/rpc"
 )
 
@@ -21,14 +21,14 @@ var _ accountproto.AccountServiceHandler = &Handler{}
 
 // Options serves as the dependency injection container to create a new handler.
 type Options struct {
-	Service        domain.Domain
+	Service        controller.Controller
 	SelfPingClient *health.SelfPingClient
 	Log            *logrus.Logger
 }
 
 // Handler implements authzproto.AuthorizationServiceHandler interface.
 type Handler struct {
-	service        domain.Domain
+	service        controller.Controller
 	selfPingClient *health.SelfPingClient
 	log            *logrus.Logger
 }
