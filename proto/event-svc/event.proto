@@ -83,9 +83,21 @@ message DeleteEventResponse {
         google.protobuf.Empty empty = 2;
     }
 }
+
 message Event {
     string id = 1;
     string name = 2;
     google.protobuf.Timestamp updated_at = 3;
     google.protobuf.Timestamp created_at = 4;
-}
+    string event_type = 1;
+    LatLong lat_long = 2;
+    google.protobuf.Timestamp start_time = 3;
+    int duration = 4;
+    User creator = 5;
+    repeated User attendees = 6;
+    string icon_url = 7;
+    string description = 8;
+    int attendee_count = 9;
+    string equipment_needed = 10;
+};
+
